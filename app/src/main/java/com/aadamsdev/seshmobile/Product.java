@@ -1,10 +1,12 @@
 package com.aadamsdev.seshmobile;
 
+import java.io.Serializable;
+
 /**
  * Created by andrewadams on 2017-11-08.
  */
 
-public class Product {
+public class Product implements Serializable{
 
     private String productName, productUrl, imageUrl;
     private float price;
