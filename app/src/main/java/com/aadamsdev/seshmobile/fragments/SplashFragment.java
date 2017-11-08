@@ -19,7 +19,6 @@ import com.aadamsdev.seshmobile.utils.HttpUtils;
 import com.android.volley.VolleyError;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -99,11 +98,11 @@ public class SplashFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putSerializable("products", products);
 
-        ProductListFragment productListFragment = new ProductListFragment();
-        productListFragment.setArguments(bundle);
+        ProductGalleryFragment productGalleryFragment = new ProductGalleryFragment();
+        productGalleryFragment.setArguments(bundle);
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.activity_main, productListFragment);
+        fragmentTransaction.replace(R.id.activity_main, productGalleryFragment);
         fragmentTransaction.commit();
     }
 }

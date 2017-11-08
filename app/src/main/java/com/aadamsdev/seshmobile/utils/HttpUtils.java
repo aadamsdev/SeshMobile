@@ -36,7 +36,7 @@ public class HttpUtils {
                 Gson gson = new Gson();
 
                 Product[] products = gson.fromJson(response, Product[].class);
-                ArrayList<Product> toReturn = (ArrayList<Product>) Arrays.asList(products);
+                ArrayList<Product> toReturn = new ArrayList<>(Arrays.asList(products));
 
                 callback.onProductsReceived(toReturn);
             }
