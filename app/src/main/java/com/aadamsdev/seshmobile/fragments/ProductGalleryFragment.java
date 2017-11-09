@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -40,6 +41,8 @@ public class ProductGalleryFragment extends Fragment {
         super.onCreate(savedInstanceState);
         context = getContext();
 
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+
         products = (ArrayList<Product>) getArguments().getSerializable("products");
         Log.i("ProductGalleryFragment", "ProductGalleryFragment");
     }
@@ -49,8 +52,6 @@ public class ProductGalleryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.product_list, container, false);
         ButterKnife.bind(this, view);
-
-
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, galleryColumns);
         recyclerView.setHasFixedSize(true);

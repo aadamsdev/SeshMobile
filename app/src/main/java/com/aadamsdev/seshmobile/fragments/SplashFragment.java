@@ -42,6 +42,7 @@ public class SplashFragment extends Fragment {
 
         try {
             ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(true);
         } catch (NullPointerException ex) {
             ex.printStackTrace();
         }
