@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SeshMobile</string>
+    <string name="product_sold_out">%1$s - Sold Out</string>
+    <string name="product_in_stock">%1$s</string>
 </resources>

@@ -1,6 +1,10 @@
 package com.aadamsdev.seshmobile;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -9,11 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.bumptech.glide.request.target.Target;
 
 import java.util.ArrayList;
@@ -28,10 +34,16 @@ import butterknife.ButterKnife;
 public class ProductGalleryAdapter extends RecyclerView.Adapter<ProductGalleryAdapter.ProductGalleryViewHolder> {
     private ArrayList<Product> products;
     private Context context;
+    private int screenWidth;
+    private int screenHeight;
+    private int columns;
 
-    public ProductGalleryAdapter(Context context, ArrayList<Product> products) {
+    public ProductGalleryAdapter(Context context, ArrayList<Product> products, int columns) {
         this.context = context;
         this.products = products;
+        screenWidth = context.getResources().getDisplayMetrics().widthPixels;
+        screenHeight = context.getResources().getDisplayMetrics().heightPixels;
+        this.columns = columns;
     }
 
     @Override
@@ -47,9 +59,22 @@ public class ProductGalleryAdapter extends RecyclerView.Adapter<ProductGalleryAd
 
     @Override
     public void onBindViewHolder(ProductGalleryAdapter.ProductGalleryViewHolder holder, int position) {
-
         Product product = products.get(position);
+
         ImageView imageView = holder.productImage;
+        final ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
+        layoutParams.height = screenHeight / columns;
+        layoutParams.width = screenWidth / columns;
+
+        if (product.isSoldOut()) {
+            imageView.setColorFilter(Color.parseColor("#7c7c7c"), PorterDuff.Mode.OVERLAY);
+        }
+
+        TextView productText = holder.productText;
+        productText.setText(product.getProductName());
+
+
+
         final ProgressBar progressBar = holder.progressBar;
 
         Glide.with(context)
@@ -67,7 +92,13 @@ public class ProductGalleryAdapter extends RecyclerView.Adapter<ProductGalleryAd
                         return false;
                     }
                 })
-                .into(imageView);
+                .into(imageView)
+                .getSize(new SizeReadyCallback() {
+                    @Override
+                    public void onSizeReady(int width, int height) {
+                        layoutParams.height = layoutParams.width;
+                    }
+                });
     }
 
     @Override
@@ -77,8 +108,14 @@ public class ProductGalleryAdapter extends RecyclerView.Adapter<ProductGalleryAd
 
     class ProductGalleryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.product_image) ImageView productImage;
-        @BindView(R.id.progress) ProgressBar progressBar;
+        @BindView(R.id.product_image)
+        ImageView productImage;
+
+        @BindView(R.id.progress)
+        ProgressBar progressBar;
+
+        @BindView(R.id.product_text)
+        TextView productText;
 
         ProductGalleryViewHolder(View itemView) {
             super(itemView);
@@ -100,8 +137,6 @@ public class ProductGalleryAdapter extends RecyclerView.Adapter<ProductGalleryAd
 //            }
         }
     }
-
-
 
 
 }

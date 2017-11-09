@@ -31,6 +31,8 @@ public class ProductGalleryFragment extends Fragment {
 
     @BindView(R.id.product_list) RecyclerView recyclerView;
 
+    private int galleryColumns = 2;
+
     private ArrayList<Product> products;
 
     @Override
@@ -39,9 +41,6 @@ public class ProductGalleryFragment extends Fragment {
         context = getContext();
 
         products = (ArrayList<Product>) getArguments().getSerializable("products");
-
-
-
         Log.i("ProductGalleryFragment", "ProductGalleryFragment");
     }
 
@@ -51,11 +50,13 @@ public class ProductGalleryFragment extends Fragment {
         view = inflater.inflate(R.layout.product_list, container, false);
         ButterKnife.bind(this, view);
 
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 2);
+
+
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, galleryColumns);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-        ProductGalleryAdapter adapter = new ProductGalleryAdapter(context, products);
+        ProductGalleryAdapter adapter = new ProductGalleryAdapter(context, products, galleryColumns);
         recyclerView.setAdapter(adapter);
 
 
