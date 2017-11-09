@@ -59,23 +59,19 @@ public class ProductGalleryAdapter extends RecyclerView.Adapter<ProductGalleryAd
 
     @Override
     public void onBindViewHolder(ProductGalleryAdapter.ProductGalleryViewHolder holder, int position) {
-        Product product = products.get(position);
+        final Product product = products.get(position);
 
-        ImageView imageView = holder.productImage;
-        final ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
+        final ImageView productImage = holder.productImage;
+        final ViewGroup.LayoutParams layoutParams = productImage.getLayoutParams();
         layoutParams.height = screenHeight / columns;
         layoutParams.width = screenWidth / columns;
 
-        if (product.isSoldOut()) {
-            imageView.setColorFilter(Color.parseColor("#7c7c7c"), PorterDuff.Mode.OVERLAY);
-        }
-
-        TextView productText = holder.productText;
+        final TextView productText = holder.productText;
         productText.setText(product.getProductName());
 
-
-
         final ProgressBar progressBar = holder.progressBar;
+
+        final TextView soldOutText = holder.soldOutText;
 
         Glide.with(context)
                 .load(product.getImageUrl())
@@ -89,10 +85,14 @@ public class ProductGalleryAdapter extends RecyclerView.Adapter<ProductGalleryAd
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                         progressBar.setVisibility(View.GONE);
+                        if (product.isSoldOut()) {
+                            productImage.setAlpha(0.3f);
+                            soldOutText.setVisibility(View.VISIBLE);
+                        }
                         return false;
                     }
                 })
-                .into(imageView)
+                .into(productImage)
                 .getSize(new SizeReadyCallback() {
                     @Override
                     public void onSizeReady(int width, int height) {
@@ -116,6 +116,9 @@ public class ProductGalleryAdapter extends RecyclerView.Adapter<ProductGalleryAd
 
         @BindView(R.id.product_text)
         TextView productText;
+
+        @BindView(R.id.sold_out_text)
+        TextView soldOutText;
 
         ProductGalleryViewHolder(View itemView) {
             super(itemView);
