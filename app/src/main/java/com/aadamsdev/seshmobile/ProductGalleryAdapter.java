@@ -48,7 +48,6 @@ public class ProductGalleryAdapter extends RecyclerView.Adapter<ProductGalleryAd
 
     @Override
     public ProductGalleryAdapter.ProductGalleryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View photoView = inflater.inflate(R.layout.product, parent, false);
@@ -58,7 +57,7 @@ public class ProductGalleryAdapter extends RecyclerView.Adapter<ProductGalleryAd
     }
 
     @Override
-    public void onBindViewHolder(ProductGalleryAdapter.ProductGalleryViewHolder holder, int position) {
+    public void onBindViewHolder(final ProductGalleryAdapter.ProductGalleryViewHolder holder, int position) {
         final Product product = products.get(position);
 
         final ImageView productImage = holder.productImage;
@@ -71,7 +70,9 @@ public class ProductGalleryAdapter extends RecyclerView.Adapter<ProductGalleryAd
 
         final ProgressBar progressBar = holder.progressBar;
 
-        final TextView soldOutText = holder.soldOutText;
+        if (!product.isSoldOut()) {
+            holder.setInStockView();
+        }
 
         Glide.with(context)
                 .load(product.getImageUrl())
@@ -85,10 +86,6 @@ public class ProductGalleryAdapter extends RecyclerView.Adapter<ProductGalleryAd
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                         progressBar.setVisibility(View.GONE);
-                        if (product.isSoldOut()) {
-                            productImage.setAlpha(0.3f);
-                            soldOutText.setVisibility(View.VISIBLE);
-                        }
                         return false;
                     }
                 })
@@ -126,6 +123,12 @@ public class ProductGalleryAdapter extends RecyclerView.Adapter<ProductGalleryAd
 
             itemView.setOnClickListener(this);
         }
+
+        public void setInStockView() {
+            productImage.setAlpha(1.0f);
+            soldOutText.setVisibility(View.GONE);
+        }
+
 
         @Override
         public void onClick(View view) {
