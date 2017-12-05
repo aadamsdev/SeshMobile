@@ -24,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Andrew Adams on 6/10/2017.
+ * Created by Andrew Adams on 6/10/2017
  */
 public class SplashFragment extends Fragment {
 
