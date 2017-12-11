@@ -129,7 +129,6 @@ public class ProductGalleryAdapter extends RecyclerView.Adapter<ProductGalleryAd
             soldOutText.setVisibility(View.GONE);
         }
 
-
         @Override
         public void onClick(View view) {
 
