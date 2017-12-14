@@ -1,4 +1,4 @@
-package com.aadamsdev.seshmobile;
+package com.aadamsdev.seshmobile.dialogs;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.aadamsdev.seshmobile.R;
 import com.aadamsdev.seshmobile.utils.DialogUtils;
 
 /**

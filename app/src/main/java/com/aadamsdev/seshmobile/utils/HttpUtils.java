@@ -1,6 +1,7 @@
 package com.aadamsdev.seshmobile.utils;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 
 import com.aadamsdev.seshmobile.Product;
@@ -22,8 +23,8 @@ import java.util.List;
 
 public class HttpUtils {
     private final static String TAG = HttpUtils.class.getSimpleName();
-//    private final static String baseUrl = "http://10.0.2.2:8000"; // TODO: LOCALHOST EMULATOR
-    private final static String baseUrl = "http://fort-tor-aa:8000"; // TODO: LOCALHOST EMULATOR
+    private final static String baseUrl = "http://10.0.2.2:8000"; // TODO: LOCALHOST EMULATOR
+//    private final static String baseUrl = "http://fort-tor-aa:8000"; // TODO: LOCALHOST EMULATOR
 
     public static void getAllProducts(Context context, final AllProductsCallback callback) {
         RequestQueue queue = Volley.newRequestQueue(context);
