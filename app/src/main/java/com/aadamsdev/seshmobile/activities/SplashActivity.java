@@ -1,12 +1,13 @@
-package com.aadamsdev.seshmobile;
+package com.aadamsdev.seshmobile.activities;
 
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.aadamsdev.seshmobile.R;
 import com.aadamsdev.seshmobile.fragments.SplashFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
 
     private FragmentTransaction fragmentTransaction;
     private SplashFragment splashFragment;
@@ -14,12 +15,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.splash_activity);
 
-        splashFragment = new SplashFragment();
+        splashFragment = SplashFragment.newFragment();
+        launchFragment(splashFragment);
+    }
 
+    private void launchFragment(SplashFragment fragment) {
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.activity_main, splashFragment);
+        fragmentTransaction.add(R.id.activity_main, fragment);
         fragmentTransaction.commit();
     }
 }

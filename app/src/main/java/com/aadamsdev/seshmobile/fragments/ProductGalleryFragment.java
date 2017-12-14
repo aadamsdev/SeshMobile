@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
  * Created by andrewadams on 2017-11-08
  */
 public class ProductGalleryFragment extends Fragment {
-
+    private static final String ARG_PRODUCTS = "products";
     private static final String DIALOG_REFRESH = "RefreshDialog";
 
     private Context context;
@@ -42,7 +42,17 @@ public class ProductGalleryFragment extends Fragment {
     private ArrayList<Product> products;
 
     @BindView(R.id.product_list)
-    private RecyclerView recyclerView;
+    RecyclerView recyclerView;
+
+    public static ProductGalleryFragment newFragment(ArrayList<Product> products) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(ARG_PRODUCTS, products);
+
+        ProductGalleryFragment productGalleryFragment = new ProductGalleryFragment();
+        productGalleryFragment.setArguments(bundle);
+
+        return productGalleryFragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +63,8 @@ public class ProductGalleryFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        products = (ArrayList<Product>) getArguments().getSerializable("products");
+        products = getArguments().getParcelableArrayList(ARG_PRODUCTS);
+
         Log.i("ProductGalleryFragment", "ProductGalleryFragment");
     }
 

@@ -132,14 +132,6 @@ public class ProductGalleryAdapter extends RecyclerView.Adapter<ProductGalleryAd
         @Override
         public void onClick(View view) {
 
-//            int position = getAdapterPosition();
-//            if(position != RecyclerView.NO_POSITION) {
-//
-//                SpacePhoto spacePhoto = mSpacePhotos[position];
-//                Intent intent = new Intent(mContext, SpacePhotoActivity.class);
-//                intent.putExtra(SpacePhotoActivity.EXTRA_SPACE_PHOTO, spacePhoto);
-//                startActivity(intent);
-//            }
         }
     }
 

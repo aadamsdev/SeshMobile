@@ -1,6 +1,7 @@
 package com.aadamsdev.seshmobile.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.ProgressBar;
 
 import com.aadamsdev.seshmobile.Product;
 import com.aadamsdev.seshmobile.R;
+import com.aadamsdev.seshmobile.activities.ProductGalleryActivity;
 import com.aadamsdev.seshmobile.utils.HttpUtils;
 import com.android.volley.VolleyError;
 
@@ -33,8 +35,13 @@ public class SplashFragment extends Fragment {
 
     @BindView(R.id.sesh_logo)
     ImageView seshLogo;
+
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
+
+    public static SplashFragment newFragment() {
+        return new SplashFragment();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +49,6 @@ public class SplashFragment extends Fragment {
 
         try {
             ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(true);
         } catch (NullPointerException ex) {
             ex.printStackTrace();
         }
@@ -81,7 +87,7 @@ public class SplashFragment extends Fragment {
                             @Override
                             public void run() {
                                 Log.i("SplashFragment", "Next fragment...");
-                                launchProductListFragment(products);
+                                launchProductGalleryActivity(products);
                             }
                         });
                     }
@@ -95,15 +101,8 @@ public class SplashFragment extends Fragment {
         });
     }
 
-    public void launchProductListFragment(ArrayList<Product> products) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("products", products);
-
-        ProductGalleryFragment productGalleryFragment = new ProductGalleryFragment();
-        productGalleryFragment.setArguments(bundle);
-
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.activity_main, productGalleryFragment);
-        fragmentTransaction.commit();
+    public void launchProductGalleryActivity(ArrayList<Product> products) {
+        Intent intent = ProductGalleryActivity.newIntent(getContext(), products);
+        getActivity().startActivity(intent);
     }
 }
