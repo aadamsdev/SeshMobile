@@ -28,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:textAlignment="center"
             android:text="@string/sold_out"
             android:textSize="16sp" />
     </RelativeLayout>
@@ -35,11 +36,12 @@
 
     <TextView
         android:id="@+id/product_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/product_image_layout"
         android:gravity="center_horizontal"
-        tools:text="This is a test product" />
+        tools:text="This is a test product"
+        android:textAlignment="center" />
 
 
 </RelativeLayout>

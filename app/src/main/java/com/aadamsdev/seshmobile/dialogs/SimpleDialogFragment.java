@@ -1,4 +1,4 @@
-package com.aadamsdev.seshmobile;
+package com.aadamsdev.seshmobile.dialogs;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
