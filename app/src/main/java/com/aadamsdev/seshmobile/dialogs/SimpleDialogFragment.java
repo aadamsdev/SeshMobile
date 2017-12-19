@@ -19,6 +19,58 @@ public class SimpleDialogFragment extends DialogFragment {
     private static final String ARG_TITLE = "title";
     private static final String ARG_TITLE_ID = "titleId";
 
+    private OnDismissListener onDismissListener;
+    private String messageText;
+    private int id;
+    private boolean isModal;
+    private String title;
+    private int titleId;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle bundle = getArguments();
+        messageText = bundle.getString(ARG_MESSAGE_TEXT, "");
+        id = bundle.getInt(ARG_MESSAGE_ID);
+        isModal = onDismissListener != null || bundle.getBoolean(ARG_MODAL);
+        title = bundle.getString(ARG_TITLE, "");
+        titleId = bundle.getInt(ARG_TITLE_ID);
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState){
+       AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+            .setPositiveButton(android.R.string.ok, null);
+
+        if (titleId != 0) {
+            builder.setTitle(titleId);
+        } else {
+            builder.setTitle(title);
+        }
+
+        if (id != 0) {
+            builder.setMessage(id);
+        } else {
+            builder.setMessage(messageText);
+        }
+
+        Dialog dialog = builder.create();
+        if (isModal) {
+            DialogUtils.setModal(dialog);
+        }
+        return dialog;
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (onDismissListener != null) {
+            onDismissListener.onDismiss(dialog);
+        }
+    }
+
     public static SimpleDialogFragment newInstance(int messageId) {
         return newInstance(0, messageId);
     }
@@ -72,63 +124,12 @@ public class SimpleDialogFragment extends DialogFragment {
         return fragment;
     }
 
-    public interface OnDismissListener {
-        void onDismiss(DialogInterface dialog);
-    }
-
-    private OnDismissListener mOnDismissListener;
-    private String mMessageText;
-    private int mMessageId;
-    private boolean mModal;
-    private String mTitle;
-    private int mTitleId;
 
     public void setOnDismissListener(OnDismissListener onDismissListener) {
-        mOnDismissListener = onDismissListener;
+        this.onDismissListener = onDismissListener;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Bundle bundle = getArguments();
-        mMessageText = bundle.getString(ARG_MESSAGE_TEXT, "");
-        mMessageId = bundle.getInt(ARG_MESSAGE_ID);
-        mModal = mOnDismissListener != null || bundle.getBoolean(ARG_MODAL);
-        mTitle = bundle.getString(ARG_TITLE, "");
-        mTitleId = bundle.getInt(ARG_TITLE_ID);
-    }
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState){
-       AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-            .setPositiveButton(android.R.string.ok, null);
-
-        if (mTitleId != 0) {
-            builder.setTitle(mTitleId);
-        } else {
-            builder.setTitle(mTitle);
-        }
-
-        if (mMessageId != 0) {
-            builder.setMessage(mMessageId);
-        } else {
-            builder.setMessage(mMessageText);
-        }
-
-        Dialog dialog = builder.create();
-        if (mModal) {
-            DialogUtils.setModal(dialog);
-        }
-        return dialog;
-    }
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
-        if (mOnDismissListener != null) {
-            mOnDismissListener.onDismiss(dialog);
-        }
+    public interface OnDismissListener {
+        void onDismiss(DialogInterface dialog);
     }
 }

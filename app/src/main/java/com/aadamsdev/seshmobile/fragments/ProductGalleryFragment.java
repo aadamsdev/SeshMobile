@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,8 +16,9 @@ import android.view.ViewGroup;
 
 import com.aadamsdev.seshmobile.Product;
 import com.aadamsdev.seshmobile.ProductGalleryAdapter;
-import com.aadamsdev.seshmobile.dialogs.ProgressDialogFragment;
 import com.aadamsdev.seshmobile.R;
+import com.aadamsdev.seshmobile.dialogs.ProgressDialogFragment;
+import com.aadamsdev.seshmobile.dialogs.SimpleDialogFragment;
 import com.aadamsdev.seshmobile.utils.DialogUtils;
 import com.aadamsdev.seshmobile.utils.HttpUtils;
 import com.android.volley.VolleyError;
@@ -33,7 +33,9 @@ import butterknife.ButterKnife;
  */
 public class ProductGalleryFragment extends Fragment {
     private static final String ARG_PRODUCTS = "products";
+
     private static final String DIALOG_REFRESH = "RefreshDialog";
+    private static final String DIALOG_REFRESH_ERROR = "RefreshErrorDialog";
 
     private Context context;
     private View view;
@@ -60,12 +62,9 @@ public class ProductGalleryFragment extends Fragment {
         context = getContext();
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-
         setHasOptionsMenu(true);
 
         products = getArguments().getParcelableArrayList(ARG_PRODUCTS);
-
-        Log.i("ProductGalleryFragment", "ProductGalleryFragment");
     }
 
     @Override
@@ -89,7 +88,8 @@ public class ProductGalleryFragment extends Fragment {
 
                     @Override
                     public void onError(VolleyError error) {
-
+                        dismissRefreshDialog();
+                        showRefreshErrorDialog();
                     }
                 });
         }
@@ -120,4 +120,14 @@ public class ProductGalleryFragment extends Fragment {
     private void dismissRefreshDialog() {
         DialogUtils.dismiss(this, DIALOG_REFRESH);
     }
+
+    private void showRefreshErrorDialog() {
+        SimpleDialogFragment dialog = SimpleDialogFragment.newInstance(R.string.refresh_error, R.string.refresh_error_text);
+        DialogUtils.show(this, dialog, DIALOG_REFRESH_ERROR);
+    }
+
+    private void dismissRefreshErrorDialog() {
+        DialogUtils.dismiss(this, DIALOG_REFRESH_ERROR);
+    }
+
 }
