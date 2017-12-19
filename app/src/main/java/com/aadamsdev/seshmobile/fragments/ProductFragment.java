@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class ProductFragment extends Fragment {
 
-    private final static String ARG_PRODUCT = "product";
+    private final static String ARG_PRODUCT = "product_gallery_item";
 
     public static ProductFragment newFragment(Product product) {
         Bundle bundle = new Bundle();

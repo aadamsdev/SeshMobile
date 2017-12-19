@@ -29,7 +29,7 @@ public class HttpUtils {
     public static void getAllProducts(Context context, final AllProductsCallback callback) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        StringRequest request = new StringRequest(Request.Method.GET, baseUrl + "/product/all", new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, baseUrl + "/product_gallery_item/all", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.i(TAG, "onResponse");

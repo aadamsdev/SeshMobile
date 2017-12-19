@@ -1,10 +1,6 @@
 package com.aadamsdev.seshmobile;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -50,7 +46,7 @@ public class ProductGalleryAdapter extends RecyclerView.Adapter<ProductGalleryAd
     public ProductGalleryAdapter.ProductGalleryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View photoView = inflater.inflate(R.layout.product, parent, false);
+        View photoView = inflater.inflate(R.layout.product_gallery_item, parent, false);
 
         ProductGalleryViewHolder viewHolder = new ProductGalleryViewHolder(photoView);
         return viewHolder;
