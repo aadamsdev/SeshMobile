@@ -8,25 +8,25 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.aadamsdev.seshmobile.Product;
 import com.aadamsdev.seshmobile.R;
-import com.aadamsdev.seshmobile.fragments.ProductGalleryFragment;
-
-import java.util.ArrayList;
+import com.aadamsdev.seshmobile.fragments.ProductFragment;
 
 /**
- * Created by andrewadams on 2017-12-11.
+ * Created by andrewadams on 2017-12-19.
  */
 
-public class ProductGalleryActivity extends AppCompatActivity {
-    private static String EXTRA_PRODUCTS = "products_extra";
+public class ProductActivity extends AppCompatActivity {
 
-    private ArrayList<Product> products;
+    private static final String EXTRA_PRODUCT = "extra_product";
 
-    private ProductGalleryFragment productGalleryFragment;
+    private Product product;
+
+    private ProductFragment productFragment;
+
     private FragmentTransaction fragmentTransaction;
 
-    public static Intent newIntent(Context context, ArrayList<Product> products) {
+    public static Intent newIntent(Context context, Product product) {
         Intent intent = new Intent(context, ProductGalleryActivity.class);
-        intent.putParcelableArrayListExtra(EXTRA_PRODUCTS, products);
+        intent.putExtra(EXTRA_PRODUCT, product);
         return intent;
     }
 
@@ -35,13 +35,13 @@ public class ProductGalleryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
 
-        products = getIntent().getParcelableArrayListExtra(EXTRA_PRODUCTS);
+        product = getIntent().getParcelableExtra(EXTRA_PRODUCT);
 
-        productGalleryFragment = ProductGalleryFragment.newFragment(products);
-        launchFragment(productGalleryFragment);
+        productFragment = ProductFragment.newFragment(product);
+        launchFragment(productFragment);
     }
 
-    private void launchFragment(ProductGalleryFragment fragment) {
+    private void launchFragment(ProductFragment fragment) {
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.activity_main, fragment);
         fragmentTransaction.commit();
